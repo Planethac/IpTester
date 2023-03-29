@@ -10,9 +10,16 @@ namespace main
         public static void Main(String[] args)
         {
             int aoitc = 0;
+            int oib = 0;
             int i = 0;
-            Console.Write("> ");
+            Console.Write("Enter Amount of ips to generate> ");
             aoitc = Convert.ToInt32(Console.ReadLine());
+            Console.Write("If exsisting ip found open in browser [y/n]>");
+            if (Console.ReadLine() == "y")
+            {
+                oib = 1;
+                Console.WriteLine("Opening found ips in browser");
+            }
             while (i != aoitc)
             {
                 Ping pinger = null;
@@ -38,6 +45,15 @@ namespace main
                     {
                         pinger.Dispose();
                     }
+                }
+                if (pingable)
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        Arguments = "/c start firefox " + ip,
+                        CreateNoWindow = true,
+                        FileName = "CMD.exe"
+                    });
                 }
                 Console.WriteLine("{0} | {1}", ip, pingable);
             }
